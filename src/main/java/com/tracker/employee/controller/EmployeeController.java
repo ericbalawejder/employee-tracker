@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/employees")
@@ -33,6 +34,14 @@ public class EmployeeController {
     public String showFormForAdd(Model model) {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
+
+        return "employees/employee-form";
+    }
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("employeeId") int id, Model theModel) {
+        Employee employee = employeeService.findById(id);
+        theModel.addAttribute("employee", employee);
 
         return "employees/employee-form";
     }
