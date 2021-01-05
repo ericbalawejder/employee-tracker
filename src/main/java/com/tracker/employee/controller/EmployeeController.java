@@ -48,6 +48,10 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+        if (employee.getFirstName().isEmpty() && employee.getLastName().isEmpty()
+                && employee.getEmail().isEmpty()) {
+            return "redirect:/employees/list";
+        }
         employeeService.save(employee);
 
         // use a redirect to prevent duplicate submissions
