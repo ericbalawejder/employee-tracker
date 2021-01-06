@@ -9,4 +9,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     public List<Employee> findAllByOrderByLastNameAsc();
 
+    public List<Employee> findByFirstNameContainsOrLastNameContainsAllIgnoreCase(
+            String firstName, String lastName);
+
 }

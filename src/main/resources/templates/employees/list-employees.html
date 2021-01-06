@@ -23,10 +23,25 @@
     <h3>Employee Directory</h3>
     <hr>
 
-    <!-- Add a button -->
-    <a th:href="@{/employees/showFormForAddEmployee}" class="btn btn-primary btn-sm mb-3">
-        Add Employee
-    </a>
+    <div>
+        User: <span sec:authentication="name"></span>
+        <br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+        <br><br>
+    </div>
+
+    <form th:action="@{/employees/search}" class="form-inline">
+        <a th:href="@{/employees/showFormForAdd}"
+           class="btn btn-primary btn-sm mr-5 mb-3">
+            Add Employee
+        </a>
+
+        <input class="form-control  ml-5 mr-sm-2 mb-3"
+               type="search" name="employeeName"
+               placeholder="Search by name" />
+
+        <button class="btn btn-success mb-3" type="submit">Search</button>
+    </form>
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">

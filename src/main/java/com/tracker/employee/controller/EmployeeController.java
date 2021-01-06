@@ -66,4 +66,12 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
+    @GetMapping("/search")
+    public String search(@RequestParam("employeeName") String name, Model model) {
+        final List<Employee> employees = employeeService.searchBy(name);
+        model.addAttribute("employees", employees);
+
+        return "/employees/list-employees";
+    }
+
 }

@@ -38,4 +38,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
     }
 
+    @Override
+    public List<Employee> searchBy(String name) {
+        List<Employee> results;
+
+        if (name != null && (name.trim().length() > 0)) {
+            results = employeeRepository
+                    .findByFirstNameContainsOrLastNameContainsAllIgnoreCase(name, name);
+        } else {
+            results = findAll();
+        }
+        return List.copyOf(results);
+    }
+
 }
