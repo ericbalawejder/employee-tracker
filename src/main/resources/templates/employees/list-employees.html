@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <!-- Required meta tags -->
@@ -22,8 +24,7 @@
     <hr>
 
     <!-- Add a button -->
-    <a th:href="@{/employees/showFormForAddEmployee}"
-       class="btn btn-primary btn-sm mb-3">
+    <a th:href="@{/employees/showFormForAddEmployee}" class="btn btn-primary btn-sm mb-3">
         Add Employee
     </a>
 
@@ -43,24 +44,33 @@
             <td th:text="${employee.lastName}"></td>
             <td th:text="${employee.email}"></td>
 
-            <!-- Add update button/link -->
             <td>
-                <a th:href="@{/employees/showFormForUpdate(employeeId=${employee.id})}"
-                   class="btn btn-info btn-sm">
-                    Update
-                </a>
+                <div sec:authorize="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')">
+                    <!-- Add "update" button/link -->
+                    <a th:href="@{/employees/showFormForUpdate(employeeId=${employee.id})}"
+                       class="btn btn-info btn-sm">
+                        Update
+                    </a>
+                </div>
 
-                <!-- Add "delete" button/link -->
-                <a th:href="@{/employees/delete(employeeId=${employee.id})}"
-                   class="btn btn-danger btn-sm"
-                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
-                    Delete
-                </a>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <!-- Add "delete" button/link -->
+                    <a th:href="@{/employees/delete(employeeId=${employee.id})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+                        Delete
+                    </a>
+                </div>
             </td>
 
         </tr>
         </tbody>
     </table>
+
+    <!-- Add a logout button -->
+    <form action="#" th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+    </form>
 
 </div>
 
